@@ -2,6 +2,7 @@ name: Update mirrors
 
 on:
   push:
+  pull_request:
   schedule:
     - cron: '0 0 1/15 * *'
 
