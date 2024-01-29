@@ -24,14 +24,14 @@ mkdir mirrors
 cd mirrors
 
 WG_WINDOWS_INSTALLER_URL="https://download.wireguard.com/windows-client/wireguard-installer.exe"
-wget -t 0 ${WG_WINDOWS_INSTALLER_URL} -O wireguard-windows-installer-latest.exe
+wget ${WG_WINDOWS_INSTALLER_URL} -O wireguard-windows-installer-latest.exe
 
 WG_ANDROID_PATH="https://download.wireguard.com/android-client/"
 WG_ANDROID_VER=$(curl -s ${WG_ANDROID_PATH} | \
                 awk -F '.apk' '{print $2}' | \
                 cut -d '-' -f 2)
 WG_ANDROID_URL=${WG_ANDROID_PATH}"com.wireguard.android-"${WG_ANDROID_VER}".apk"
-wget -t 0 ${WG_ANDROID_URL} -O wireguard-android-latest.apk
+wget ${WG_ANDROID_URL} -O wireguard-android-latest.apk
 
 cat >wireguard-ubuntu-latest.sh <<WG_UBUNTU_EO'F'
 #!/bin/bash
