@@ -12,6 +12,7 @@ cat >index.html <<INDEX_EOF
 <li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-android-latest.apk">wireguard-android-latest.apk</a></li>
 <li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-windows-latest-amd64.msi">wireguard-windows-latest-amd64.msi</a></li>
 <li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-windows-latest-arm64.msi">wireguard-windows-latest-arm64.msi</a></li>
+<li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-windows-latest-x86.msi">wireguard-windows-latest-x86.msi</a></li>
 <li><a href="https://apps.apple.com/us/app/wireguard/id1451685025">wireguard-macos-latest (us)</a></li>
 <li><a href="https://apps.apple.com/us/app/wireguard/id1441195209">wireguard-ios/ipados-latest (us)</a></li>
 </ul>
@@ -28,6 +29,8 @@ WG_WINDOWS_AMD64=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 4)
 wget -t 0 ${WG_WINDOWS_PATH}${WG_WINDOWS_AMD64} -O wireguard-windows-latest-amd64.msi
 WG_WINDOWS_ARM64=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 6)
 wget -t 0 ${WG_WINDOWS_PATH}${WG_WINDOWS_ARM64} -O wireguard-windows-latest-arm64.msi
+WG_WINDOWS_X86=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 6)
+wget -t 0 ${WG_WINDOWS_PATH}${WG_WINDOWS_X86} -O wireguard-windows-latest-x86.msi
 
 WG_ANDROID_PATH="https://download.wireguard.com/android-client/"
 WG_ANDROID_VER=$(curl -s ${WG_ANDROID_PATH} | \
