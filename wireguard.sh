@@ -26,6 +26,8 @@ cd mirrors
 WG_WINDOWS_INSTALLER_URL="https://download.wireguard.com/windows-client/wireguard-installer.exe"
 wget ${WG_WINDOWS_INSTALLER_URL} -O wireguard-windows-installer-latest.exe
 
+# TODO
+
 WG_ANDROID_PATH="https://download.wireguard.com/android-client/"
 WG_ANDROID_VER=$(curl -s ${WG_ANDROID_PATH} | \
                 awk -F '.apk' '{print $2}' | \
