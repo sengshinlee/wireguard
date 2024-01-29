@@ -34,4 +34,5 @@ jobs:
 
       - name: Push
         run: |
+          git pull
           git push -u origin main
