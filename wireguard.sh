@@ -113,8 +113,8 @@ function create_wg_if() {
             fi
         done
 
-        local SERVER_PUB_IPV4="$(wget -qO- -t1 -T2 ipv4.icanhazip.com)"
-        local SERVER_PUB_NIC="$(ip -4 route ls | grep default | grep -Po '(?<=dev )(\S+)' | head -1)"
+        local SERVER_PUBLIC_IPV4="$(wget -qO- -t1 -T2 ipv4.icanhazip.com)"
+        local SERVER_PUBLIC_NIC="$(ip -4 route ls | grep default | grep -Po '(?<=dev )(\S+)' | head -1)"
 
         local SERVER_WG_PORT=$(expr 10000 + ${SERVER_WG_NIC_NUM})
         local SERVER_WG_NIC="wg${SERVER_WG_NIC_NUM}"
@@ -143,11 +143,11 @@ function create_server_if() {
 PrivateKey = ${SERVER_PRIVATE_KEY}
 Address = ${SERVER_WG_IPV4}
 ListenPort = ${SERVER_WG_PORT}
-PostUp = ufw route allow in on ${SERVER_WG_NIC} out on ${SERVER_PUB_NIC}
-PostUp = iptables -t nat -I POSTROUTING -o ${SERVER_PUB_NIC} -j MASQUERADE
+PostUp = ufw route allow in on ${SERVER_WG_NIC} out on ${SERVER_PUBLIC_NIC}
+PostUp = iptables -t nat -I POSTROUTING -o ${SERVER_PUBLIC_NIC} -j MASQUERADE
 PostUp = ufw allow ${SERVER_WG_PORT}/udp && ufw reload
-PreDown = ufw route delete allow in on ${SERVER_WG_NIC} out on ${SERVER_PUB_NIC}
-PreDown = iptables -t nat -D POSTROUTING -o ${SERVER_PUB_NIC} -j MASQUERADE
+PreDown = ufw route delete allow in on ${SERVER_WG_NIC} out on ${SERVER_PUBLIC_NIC}
+PreDown = iptables -t nat -D POSTROUTING -o ${SERVER_PUBLIC_NIC} -j MASQUERADE
 PreDown = ufw delete allow ${SERVER_WG_PORT}/udp && ufw reload
 
 [Peer]
@@ -166,7 +166,7 @@ DNS = 1.1.1.1, 1.0.0.1
 [Peer]
 PublicKey = ${SERVER_PUBLIC_KEY}
 AllowedIPs = 0.0.0.0/0
-Endpoint = ${SERVER_PUB_IPV4}:${SERVER_WG_PORT}
+Endpoint = ${SERVER_PUBLIC_IPV4}:${SERVER_WG_PORT}
 PersistentKeepalive = 25
 EOF
 }
