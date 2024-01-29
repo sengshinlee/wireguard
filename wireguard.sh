@@ -253,7 +253,6 @@ function down_wg() {
     else
         echo "> Uninstalled!"
     fi
-
 }
 
 function down_net() {
