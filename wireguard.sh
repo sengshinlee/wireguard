@@ -10,12 +10,13 @@ cat >index.html <<INDEX_EOF
 <ul>
 <li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-ubuntu-latest.sh">wireguard-ubuntu-latest.sh</a></li>
 <li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-android-latest.apk">wireguard-android-latest.apk</a></li>
-<li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-windows-installer-latest.exe">wireguard-windows-installer-latest.exe</a></li>
+<li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-windows-latest-amd64.msi">wireguard-windows-latest-amd64.msi</a></li>
+<li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-windows-latest-arm64.msi">wireguard-windows-latest-arm64.msi</a></li>
+<li><a href="https://wireguard.sengshinlee.com/mirrors/wireguard-windows-latest-x86.msi">wireguard-windows-latest-x86.msi</a></li>
 <li><a href="https://apps.apple.com/us/app/wireguard/id1451685025">wireguard-macos-latest (us)</a></li>
 <li><a href="https://apps.apple.com/us/app/wireguard/id1441195209">wireguard-ios/ipados-latest (us)</a></li>
 </ul>
 INDEX_EOF
-
 
 if [ -d "mirrors" ]; then
     rm -rf mirrors
@@ -23,17 +24,20 @@ fi
 mkdir mirrors
 cd mirrors
 
-WG_WINDOWS_INSTALLER_URL="https://download.wireguard.com/windows-client/wireguard-installer.exe"
-aria2c -c -t 10 -s 10 -o wireguard-windows-installer-latest.exe ${WG_WINDOWS_INSTALLER_URL}
-
-# TODO
+WG_WINDOWS_PATH="https://download.wireguard.com/windows-client/"
+WG_WINDOWS_AMD64=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 4)
+aria2c -c -t 1000 -s 1000 -o wireguard-windows-latest-amd64.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_AMD64}
+WG_WINDOWS_ARM64=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 6)
+aria2c -c -t 1000 -s 1000 -o wireguard-windows-latest-arm64.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_ARM64}
+WG_WINDOWS_X86=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 6)
+aria2c -c -t 1000 -s 1000 -o wireguard-windows-latest-x86.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_X86}
 
 WG_ANDROID_PATH="https://download.wireguard.com/android-client/"
 WG_ANDROID_VER=$(curl -s ${WG_ANDROID_PATH} | \
                 awk -F '.apk' '{print $2}' | \
                 cut -d '-' -f 2)
 WG_ANDROID_URL=${WG_ANDROID_PATH}"com.wireguard.android-"${WG_ANDROID_VER}".apk"
-aria2c -c -t 10 -s 10 -o wireguard-android-latest.apk ${WG_ANDROID_URL} 
+aria2c -c -t 1000 -s 1000 -o wireguard-android-latest.apk ${WG_ANDROID_URL} 
 
 cat >wireguard-ubuntu-latest.sh <<WG_UBUNTU_EO'F'
 #!/bin/bash
