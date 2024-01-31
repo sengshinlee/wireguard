@@ -55,13 +55,13 @@ function distrib() {
 
 function kernel() {
     local VER="$(uname -r | cut -d- -f1)"
-    if str1.str2.str3_lt ${VER} "5.6.0"; then
+    if num1.num2.num3_lt ${VER} "5.6.0"; then
         echo "> Kernel version must be >= 5.6.0!"
         exit 1
     fi
 }
 
-function str1.str2.str3_lt() {
+function num1.num2.num3_lt() {
     test "$(echo "$@" | tr " " "\n" | sort -rV | head -n 1)" != "$1"
 }
 
