@@ -84,7 +84,7 @@ function version() {
     if [ ${IS_INSTALLED} -eq 0 ]; then
         wg -v
     else
-        echo "> Uninstalled!"
+        echo "> Not installed!"
     fi
 }
 
@@ -136,7 +136,7 @@ function create_wg_if() {
         create_server_if
         create_client_if
     else
-        echo "> Uninstalled!"
+        echo "> Not installed!"
     fi
 }
 
@@ -178,7 +178,7 @@ function show() {
     if [ ${IS_INSTALLED} -eq 0 ]; then
         wg | grep "interface" | awk '{print $2}'
     else
-        echo "> Uninstalled!"
+        echo "> Not installed!"
     fi
 }
 
@@ -205,7 +205,7 @@ function up_wg() {
             fi
         done
     else
-        echo "> Uninstalled!"
+        echo "> Not installed!"
     fi
 }
 
@@ -251,7 +251,7 @@ function down_wg() {
             fi
         done
     else
-        echo "> Uninstalled!"
+        echo "> Not installed!"
     fi
 }
 
@@ -277,7 +277,7 @@ function remove_wg_if() {
             fi
         done
     else
-        echo "> Uninstalled!"
+        echo "> Not installed!"
     fi
 }
 
@@ -298,7 +298,7 @@ function uninstall_wg_tools() {
         apt-get remove wireguard-tools -y >/dev/null 2>&1
         rm -rf /etc/wireguard >/dev/null 2>&1
     else
-        echo "> Uninstalled!"
+        echo "> Not installed!"
     fi
 }
 
