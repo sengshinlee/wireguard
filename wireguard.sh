@@ -26,18 +26,18 @@ cd mirrors
 
 WG_WINDOWS_PATH="https://download.wireguard.com/windows-client/"
 WG_WINDOWS_AMD64=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 4)
-aria2c -c -t 10 -s 10 -o wireguard-windows-latest-amd64.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_AMD64}
+wget -t 0 wireguard-windows-latest-amd64.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_AMD64}
 WG_WINDOWS_ARM64=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 6)
-aria2c -c -t 10 -s 10 -o wireguard-windows-latest-arm64.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_ARM64}
+wget -t 0 wireguard-windows-latest-arm64.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_ARM64}
 WG_WINDOWS_X86=$(curl -s ${WG_WINDOWS_PATH} | cut -d '"' -f 6)
-aria2c -c -t 10 -s 10 -o wireguard-windows-latest-x86.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_X86}
+wget -t 0 wireguard-windows-latest-x86.msi ${WG_WINDOWS_PATH}${WG_WINDOWS_X86}
 
 WG_ANDROID_PATH="https://download.wireguard.com/android-client/"
 WG_ANDROID_VER=$(curl -s ${WG_ANDROID_PATH} | \
                 awk -F '.apk' '{print $2}' | \
                 cut -d '-' -f 2)
 WG_ANDROID_URL=${WG_ANDROID_PATH}"com.wireguard.android-"${WG_ANDROID_VER}".apk"
-aria2c -c -t 10 -s 10 -o wireguard-android-latest.apk ${WG_ANDROID_URL} 
+wget -t 0 wireguard-android-latest.apk ${WG_ANDROID_URL} 
 
 cat >wireguard-ubuntu-latest.sh <<WG_UBUNTU_EO'F'
 #!/bin/bash
@@ -66,7 +66,7 @@ function num1.num2.num3_lt() {
 }
 
 function is_root() {
-    if [ "$(echo $USER)" != "root" ]; then
+    if [ "$(echo ${USER})" != "root" ]; then
         echo "> You need to be root to run this script!"
         exit 1
     fi
