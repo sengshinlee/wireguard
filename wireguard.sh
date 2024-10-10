@@ -148,10 +148,14 @@ Address = ${SERVER_WG_IPV4}
 ListenPort = ${SERVER_WG_PORT}
 PostUp = ufw route allow in on ${SERVER_WG_NIC} out on ${SERVER_PUBLIC_NIC}
 PostUp = iptables -t nat -I POSTROUTING -o ${SERVER_PUBLIC_NIC} -j MASQUERADE
-PostUp = [ $(ufw status | wc -l) -eq 1 ] && ufw enable; ufw allow proto udp from any to any port ${SERVER_WG_PORT} && ufw reload
+PostUp = sed -i 's/IPV6=yes/IPV6=no/' /etc/default/ufw && ufw reload
+PostUp = [ $(ufw status | wc -l) -eq 1 ] && ufw enable
+PostUp = ufw allow ${SERVER_WG_PORT}/udp && ufw reload
 PreDown = ufw route delete allow in on ${SERVER_WG_NIC} out on ${SERVER_PUBLIC_NIC}
 PreDown = iptables -t nat -D POSTROUTING -o ${SERVER_PUBLIC_NIC} -j MASQUERADE
-PreDown = [ $(ufw status | wc -l) -eq 1 ] && ufw enable; ufw delete allow proto udp from any to any port ${SERVER_WG_PORT} && ufw reload
+PreDown = [ $(ufw status | wc -l) -eq 1 ] && ufw enable
+PreDown = ufw delete allow ${SERVER_WG_PORT}/udp && ufw reload
+PostUp = sed -i 's/IPV6=no/IPV6=yes/' /etc/default/ufw && ufw reload
 
 [Peer]
 PublicKey = ${CLIENT_PUBLIC_KEY}
