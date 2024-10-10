@@ -106,10 +106,10 @@ Address = ${SERVER_WG_IPV4}
 ListenPort = ${SERVER_WG_PORT}
 PostUp = ufw route allow in on ${SERVER_WG_NIC} out on ${SERVER_PUBLIC_NIC}
 PostUp = iptables -t nat -I POSTROUTING -o ${SERVER_PUBLIC_NIC} -j MASQUERADE
-PostUp = ufw allow ${SERVER_WG_PORT}/udp && ufw reload
+PostUp = [ $(ufw status | wc -l) -eq 1 ] && ufw enable; ufw allow proto udp from any to any port ${SERVER_WG_PORT} && ufw reload
 PreDown = ufw route delete allow in on ${SERVER_WG_NIC} out on ${SERVER_PUBLIC_NIC}
 PreDown = iptables -t nat -D POSTROUTING -o ${SERVER_PUBLIC_NIC} -j MASQUERADE
-PreDown = ufw delete allow ${SERVER_WG_PORT}/udp && ufw reload
+PreDown = [ $(ufw status | wc -l) -eq 1 ] && ufw enable; ufw delete allow proto udp from any to any port ${SERVER_WG_PORT} && ufw reload
 
 [Peer]
 PublicKey = ${CLIENT_PUBLIC_KEY}
