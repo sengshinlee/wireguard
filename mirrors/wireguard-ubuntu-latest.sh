@@ -113,7 +113,7 @@ PreDown = ufw route delete allow in on ${SERVER_WG_NIC} out on ${SERVER_PUBLIC_N
 PreDown = iptables -t nat -D POSTROUTING -o ${SERVER_PUBLIC_NIC} -j MASQUERADE
 PreDown = [ $(ufw status | wc -l) -eq 1 ] && ufw enable
 PreDown = ufw delete allow ${SERVER_WG_PORT}/udp && ufw reload
-PostUp = sed -i 's/IPV6=no/IPV6=yes/' /etc/default/ufw && ufw reload
+PreDown = sed -i 's/IPV6=no/IPV6=yes/' /etc/default/ufw && ufw reload
 
 [Peer]
 PublicKey = ${CLIENT_PUBLIC_KEY}
