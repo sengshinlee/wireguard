@@ -1,0 +1,2 @@
+Description
+  A bash script for Ubuntu to install WireGuard VPN and generate a pair of interface configuration files (IPv4-only).
