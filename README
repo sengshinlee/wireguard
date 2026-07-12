@@ -1,0 +1,4 @@
+Description
+  A bash script for Ubuntu to install WireGuard VPN and generate some interface configuration files for all platforms automatically (Dual-stack supported).
+
+"WireGuard" and the "WireGuard" logo are registered trademarks of Jason A. Donenfeld (https://zx2c4.com).
