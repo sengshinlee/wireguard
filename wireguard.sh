@@ -73,7 +73,7 @@ function generate_wg_ifs() {
         generate_server_wg_if
         generate_client_wg_if
         generate_client_wg_split_tunneling_if
-        chmod -R 400 SERVER_WG_IF_CONF_ROOT_DIR
+        chmod -R 400 ${SERVER_WG_IF_CONF_ROOT_DIR}
 
         echo ${SERVER_WG_IF_CONF}
         echo ${CLIENT_WG_IF_CONF}
@@ -221,7 +221,7 @@ AllowedIPs = ${CLIENT_WG_IPV4}/32, ${CLIENT_WG_IPV6}/128
 EOF
             fi
         done
-        chmod -R 400 SERVER_WG_IF_CONF_ROOT_DIR
+        chmod -R 400 ${SERVER_WG_IF_CONF_ROOT_DIR}
         exit 0
     else
         echo "ERROR: No such files!"
